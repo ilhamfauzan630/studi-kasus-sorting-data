@@ -1,91 +1,141 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@ilhamfauzan630 
+ilhamfauzan630
+/
+SortingDataMahasiswa
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+SortingDataMahasiswa/main.cpp
+@ilhamfauzan630
+ilhamfauzan630 Initial commit
+Latest commit a885386 yesterday
+ History
+ 1 contributor
+99 lines (85 sloc)  1.7 KB
+   
 #include <iostream>
+using namespace std;
 
-class Sorting {
-    friend std::istream& operator>>(std::istream&, Sorting&);
-    friend std::ostream& operator<<(std::ostream&, Sorting&);
+class datamhs{
+  public:
+    void input();
+    void tampil();
+    void tukar(int a, int b);
+    void tukarnama(int c, int d);
+    void proses();
+    void caridata();
 
-    public:
-        void selection_sort();
-        int pencarianBiner();
-
-    private:
-        void minimum(int, int, int&);
-        void tukar(int&, int&);
-
-        int data[10], n;
+  private:
+    int nim[10];
+    int n;
+    string namamhs[10];
 };
 
-void Sorting::minimum(int low, int high, int& min) {
-    min = low;
-    for (int i = low + 1; i <= high; i++) {
-        if (data[i] < data[min]) {
-            min = i;
+void datamhs::input(){
+    cout<<"Input Total Mahasiswa : ";
+    cin>>n;
+    
+  
+    for(int i=0; i<n; i++){
+        cout<<"Masukan nim  : ";
+        cin>>nim[i];
+        cout<<"Masukan Nama : "; cin>>namamhs[i];
+    }
+    cout<<endl;
+}
+
+void datamhs::tampil()
+{
+    cout << "Menampilkan data mahasiswa"<<endl;
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Nim : "<< nim[i]<<endl;
+        cout << "Nama : "<<namamhs[i]<<endl;
+    }
+    cout << endl;
+}
+
+void datamhs::tukar(int a, int b)
+{
+    int t;
+    t = nim[b];
+    nim[b] = nim[a];
+    nim[a] = t;
+}
+
+void datamhs::tukarnama(int c, int d){
+    string p;
+    p = namamhs[d];
+    namamhs[d] = namamhs[c];
+    namamhs[c] = p;
+}
+
+void datamhs::proses()
+{
+    for (int i = 1; i < n; i++)
+    {
+        for (int j = n - 1; j >= i; j--)
+        {
+            if (nim[j] < nim[j - 1]){
+                tukar(j, j - 1);
+                tukarnama(j, j - 1);
+                cout << endl;
+            }
         }
     }
+    tampil();
+    cout << endl;
 }
 
-void Sorting::tukar(int& a, int& b) {
-    int temp = a;
-    a = b;
-    b = temp;
-}
+void datamhs::caridata(){
+  int cari;  
+  cout << "Masukan Nim mahasiswa yang akan dicari : ";
+  cin >> cari;
 
-void Sorting::selection_sort() {
-    int min;
-    for (int i = 0; i < n; i++) {
-        minimum(i, n, min);
-        tukar(data[i], data[min]);
-        std::cout << "data ke-" << i + 1 << ": " << data[i] << std::endl;
-    }
-}
-
-int Sorting::pencarianBiner() {
-    int kunciPencarian;
-
-    std::cout << "Masukan data yang dicari: "; std::cin >> kunciPencarian;
-
-    int low = 0, high = n - 1, mid = (low + high) / 2;
-    while (low <= high) {
-        if (data[mid] == kunciPencarian) {
-            return mid;
-        } else if (data[mid] < kunciPencarian) {
-            low = mid + 1;
-        } else {
-            high = mid - 1;
+  for (int i = 0; i < n; i++)
+    {
+        if (nim[i]==cari)
+        {
+            cout << "data hasil pencarian"<<endl;
+            cout << "Nim : "<<nim[i]<<endl;
+            cout << "Nama : "<< namamhs[i]<<endl;
         }
-        mid = (low + high) / 2;
     }
-
-    if (low > high) {
-        std::cout << "Data tidak ditemukan" << std::endl;
-        return -1;
-    }
-}
-
-std::istream& operator>>(std::istream& in, Sorting& s) {
-    std::cout << "Masukkan jumlah data: ";
-    in >> s.n;
-    for (int i = 0; i < s.n; i++) {
-        std::cout << "Masukan data ke-" << i + 1 << ": ";
-        in >> s.data[i];
-    }
-
-    std::cout << "Data setelah diurutkan: \n";
-    s.selection_sort();
-
-    return in;
-}
-
-std::ostream& operator<<(std::ostream& out, Sorting& s) {
-    int index = s.pencarianBiner();
-    std::cout << "Data berada pada index: " << index << " (atau data ke-" << index + 1 << ")" << std::endl;
-
-    return out;
 }
 
 int main() {
-    Sorting s;
-    std::cin >> s;
-    std::cout << s;
+  datamhs sorting;
+  sorting.input();
+  sorting.proses();
+  sorting.caridata();
+  
 
+  return 0;
 }
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete
